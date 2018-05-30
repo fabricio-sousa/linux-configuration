@@ -234,3 +234,14 @@ host    all             all             ::1/128                 md5
 * Source [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
 
 8. And last, but not least, `sudo service apache2 restart` and launch the website!
+
+### Bug-Squashing References and Sources!
+
+The following links provided me with great ideas and solutions to solve the countless bugs you will most likely encounter during this project:
+
+* [`ImportError: No module named psycopg2`: StackOverflow](https://stackoverflow.com/questions/12906351/importerror-no-module-named-psycopg2)
+* [`ImportError: No module named sqlalchemy`: StackOverflow](https://stackoverflow.com/questions/10572498/importerror-no-module-named-sqlalchemy)
+* [`OperationalError: (sqlite3.OperationalError) unable to open database file (Background on this error at: http://sqlalche.me/e/e3q8`: Udacity Forums!](https://discussions.udacity.com/t/operationalerror-sqlite3-operationalerror-unable-to-open-database-file-background-on-this-error-at-http-sqlalche-me-e-e3q8/605647)
+
+* [SQLAlchemy Error Messages](http://docs.sqlalchemy.org/en/latest/errors.html#error-e3q8)
+
