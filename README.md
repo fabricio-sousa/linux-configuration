@@ -10,6 +10,16 @@ From Udacity's course description: "You will take a baseline installation of a L
 * SSH Port: 2200
 * App URL: http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/
 
+## Software Used For This Project ##
+
+* For code editing, I used Microsoft Visual Studio Code.
+* During testing phase of the Item Catalog project, I used Oracle Virtual Machine VirtualBox Version 5.2.12
+* For simplified SSH access during testing phase, I used Vagrant Version 2.1.1
+* For terminal Bash access and version control, I used Git Version 2.17.1
+* Internet browser used was Google Chrome Version 66.0.3359.181
+* My local machine is an Alienware 17 R4 laptop running Microsoft Windows 10 Home.
+* Responsive design was tested via an iPhone 7 Plus.
+
 ## Linux Server Configuration and App Deployment Steps ##
 
 ### Get your server. ####
