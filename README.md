@@ -225,7 +225,8 @@ application.secret_key = "super_secret_key"
 * Modify all entries with `engine = create_engine("sqlite:///catalog.db")` in the `__init__.py` and `database_setup.py` and `fake_db.py` to `engine = create_engine('postgresql://catalog:PASSWORD@localhost/catalog')` where PASSWORD in my case was 'catalog' set above.
 * Setup the database by running `python /var/www/catalog/catalog/database_setup.py` and populate it with `fake_db.py`
 * Disallow remove connections to the database via: `sudo nano /etc/postgresql/9.3/main/pg_hba.conf` and make sure it looks like the following:
-```local   all             postgres                                peer
+```
+local   all             postgres                                peer
 local   all             all                                     peer
 host    all             all             127.0.0.1/32            md5
 host    all             all             ::1/128                 md5
