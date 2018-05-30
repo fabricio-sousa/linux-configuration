@@ -1,16 +1,14 @@
 # Linux Server Configuration Project #
 
-The Live version of project can be found Here.
-
 ## Introduction ##
 
-From udacity's course description: "You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers."
+From Udacity's course description: "You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers."
 
 ## Server Info ##
 
-IP address: 18.221.122.149
-SSH Port: 220
-App URL: http://http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/catalog/
+* IP address: 18.221.122.149
+* SSH Port: 2200
+* App URL: http://http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/catalog/
 
 ## Linux Server Configuration and App Deployment Steps ##
 
@@ -30,7 +28,7 @@ App URL: http://http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/catalo
 * Move the downloaded key into your local computer folder `~/.ssh` and rename it to `ls_key.rsa`
 * In Git Bash, type `chmod 600 ~/.ssh/ls_key.rsa`
 * Use the following command to connect to the instance via Git Bash:
-```ssh -i ~/.ssh/lightsail_key.rsa ubuntu@18.221.122.149```, where 18.221.122.149 is the instance public IP.
+```ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149```, where 18.221.122.149 is the instance public IP.
 
 ### Secure your server. ###
 1. Update and upgrade installed packages: 
@@ -45,7 +43,9 @@ App URL: http://http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/catalo
 
 3. Configure the UFW Firewall:
 * We are configuring the Ubuntu firewall to allow connections from port 2200 (SSH), 80 (HTTP) and 123 (NTP), as follows:
-```sudo ufw status
+
+```
+sudo ufw status
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 2200/tcp
@@ -54,8 +54,8 @@ sudo ufw allow 123/udp
 sudo ufw deny 22
 sudo ufw enable
 ```
-* Exit the connection by typing `exit` then enter.
-* Return to the instance firewall management page in Amazon Lightsail and delete port 22
+* Exit the connection by typing `exit` then `enter`.
+* Return to the instance firewall management page in Amazon Lightsail and delete port 22.
 
 4. Install fail2ban to help prevent brute-force server attacks:
 * Install the package via `sudo apt-get install fail2ban`
@@ -63,15 +63,16 @@ sudo ufw enable
 * Generate a file to customize fail2ban via `sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local`
 * `sudo nano /etc/fail2ban/jail.local` and change the settings as follows:
 
-```destemail = your email
+```
+destemail = your email
 set bantime = 600
 action = %(action_mwl)s
 ```
 
-* Still in the same edit screen, under `[sshd]' change the port ssh to 2200.
+* Still in the same edit screen, under `[sshd]` change the port ssh to 2200.
 * Save and close the nano editor.
 * `sudo service fail2ban restart`
-Sources: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04)
+* Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04)
 
 5. Allow automatic system updates:
 * `sudo apt-get install unattended-upgrades`
@@ -79,9 +80,10 @@ Sources: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to
 * Save and close the nano editor.
 * `sudo nano /etc/apt/apt.conf.d/20auto-upgrades` and edit as follows:
 
-```APT::Periodic::Update-Package-Lists "1";
+```
+APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
-`APT::Periodic::AutocleanInterval "7";
+APT::Periodic::AutocleanInterval "7";
 APT::Periodic::Unattended-Upgrade "1";
 ```
 
@@ -96,8 +98,7 @@ APT::Periodic::Unattended-Upgrade "1";
 `sudo apt-get dist-upgrade`
 `sudo shutdown -r now`
 * SSH back in.
-
-Source: [Digital Ocean](https://www.digitalocean.com/community/questions/updating-ubuntu-14-04-security-updates)
+* Source: [Digital Ocean](https://www.digitalocean.com/community/questions/updating-ubuntu-14-04-security-updates)
 
 ### Give grader access. ###
 
@@ -121,8 +122,7 @@ Source: [Digital Ocean](https://www.digitalocean.com/community/questions/updatin
 * `sudo nano /etc/ssh/sshd_config` and make sure `PasswordAuthentication` is set to no.
 * `sudo service ssh restart`
 * `exit` and then `ssh -i ~/.ssh/grader_key -p 2200 grader@18.221.122.149`
-
-Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2)
+* Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2)
 
 ### Prepare the Server and Deploy your App! ###
 
@@ -146,7 +146,8 @@ Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-
 * Create a catalog.wsgi file so that it can run the web app over the apache mod_wsgi, as follows:
 `sudo nano var/www/catalog/catalog.wsgi` and add:
 
-```#!/usr/bin/python
+```
+#!/usr/bin/python
 import sys
 import logging
 logging.basicConfig(stream=sys.stderr)
@@ -157,8 +158,7 @@ application.secret_key = "super_secret_key"
 ```
 
 * `sudo service apache2 restart`
-
-Source: [mod_wsgi](http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIScriptAlias.html)
+* Source: [mod_wsgi](http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIScriptAlias.html)
 
 4. Update the OAuth client IDs and Javascript origins
 
@@ -177,14 +177,14 @@ Source: [mod_wsgi](http://modwsgi.readthedocs.io/en/develop/configuration-direct
 * `pip install Flask`
 * Install the remaining dependencies for the web app:
 `pip install bleach httplib2 request oauth2client sqlalchemy python-psycopg2`
-
-Source: [Flask](http://flask.pocoo.org/docs/0.12/installation/), [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps_)
+* Source: [Flask](http://flask.pocoo.org/docs/0.12/installation/), [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps_)
 
 6. Configure the Virtual Host
 
 * `sudo nano /etc/apache2/sites-available/catalog.conf` to config a new virtual host.
 * Add the following to the new file:
-```<VirtualHost *:80>
+```
+<VirtualHost *:80>
     ServerName 18.221.122.149
     ServerAlias ec2-18-221-122-149.us-east-2.compute.amazonaws.com
     ServerAdmin admin@18.221.122.149
@@ -206,8 +206,7 @@ Source: [Flask](http://flask.pocoo.org/docs/0.12/installation/), [Digital Ocean]
 </VirtualHost>
 ```
 * Enable the host via `sudo a2ensite catalog`
-
-Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts)
+* Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts)
 
 7. Configure PostgreSQL and modify the app to use it
 
@@ -231,7 +230,6 @@ local   all             all                                     peer
 host    all             all             127.0.0.1/32            md5
 host    all             all             ::1/128                 md5
 ```
-
-Source [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
+* Source [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
 
 8. And last, but not least, `sudo service apache2 restart` and launch the website!
