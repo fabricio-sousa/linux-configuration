@@ -8,7 +8,7 @@ From Udacity's course description: "You will take a baseline installation of a L
 
 * IP address: 18.221.122.149
 * SSH Port: 2200
-* App URL: http://http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/catalog/
+* App URL: http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/
 
 ## Linux Server Configuration and App Deployment Steps ##
 
@@ -17,31 +17,31 @@ From Udacity's course description: "You will take a baseline installation of a L
 1. Start a new Ubuntu Linux server instance on Amazon Lightsail
 * Access [Amazon Lightsail](https://lightsail.aws.amazon.com/ls/webapp/home/resources) and follow instructions to create an account. 
 * Click `Create Instance`
-* Choose the Linux platform, OS Only, and Ubuntu 16.04 LTS.
-* Choose the lowest tier plan.
-* Rename instance if desired.
-* Click `Create`
-* It takes a short while for the instance to initialize.
+* Choose the Linux platform, OS Only, and Ubuntu.
 
 2. SSH into the server
-* Click the instance you just created, click "Account" at the bottom, and download the `Default Private Key`
+
+* Once initialized, click the instance you just created, click "Account" at the bottom, and download the private key.
 * Move the downloaded key into your local computer folder `~/.ssh` and rename it to `ls_key.rsa`
 * In Git Bash, type `chmod 600 ~/.ssh/ls_key.rsa`
 * Use the following command to connect to the instance via Git Bash:
-```ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149```, where 18.221.122.149 is the instance public IP.
+`ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149`
 
 ### Secure your server. ###
+
 1. Update and upgrade installed packages: 
 * `sudo apt-get update`
 * `sudo apt-get upgrade`
 
-2. Change the SSH port from 22 to 2200:
+2. Set the SSH port from 22 to 2200:
+
 * First go to the Instances main page, click `Networking` and click `Add Another` two times. Then add `Custom UDP` with value of 123; then `Custom TCP` with value of 2200. Click Save.
 * Next, in Git Bash, type: `sudo nano /etc/ssh/sshd_config` and change the port value from 22 to 2200.
-* To save, click Ctrl+X then Y then Enter.
+* Save and exit the nano editor.
 * Restart the SSH via `sudo service ssh restart`
 
 3. Configure the UFW Firewall:
+
 * We are configuring the Ubuntu firewall to allow connections from port 2200 (SSH), 80 (HTTP) and 123 (NTP), as follows:
 
 ```
@@ -56,6 +56,7 @@ sudo ufw enable
 ```
 * Exit the connection by typing `exit` then `enter`.
 * Return to the instance firewall management page in Amazon Lightsail and delete port 22.
+* `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149`
 
 4. Install fail2ban to help prevent brute-force server attacks:
 * Install the package via `sudo apt-get install fail2ban`
@@ -70,7 +71,7 @@ action = %(action_mwl)s
 ```
 
 * Still in the same edit screen, under `[sshd]` change the port ssh to 2200.
-* Save and close the nano editor.
+* Save and exit the nano editor.
 * `sudo service fail2ban restart`
 * Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04)
 
@@ -87,7 +88,7 @@ APT::Periodic::AutocleanInterval "7";
 APT::Periodic::Unattended-Upgrade "1";
 ```
 
-* `sudo dpkg-reconfigure --priority=low unattended-upgrades`
+* `sudo dpkg-reconfigure --priority=low unattended-upgrades` Initializes it.
 
 6. Disable root login:
 * `sudo nano /etc/ssh/sshd_config` and set `PermitRootLogin` to no.
@@ -97,22 +98,22 @@ APT::Periodic::Unattended-Upgrade "1";
 `sudo apt-get update`
 `sudo apt-get dist-upgrade`
 `sudo shutdown -r now`
-* SSH back in.
+* `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149` Back in.
 * Source: [Digital Ocean](https://www.digitalocean.com/community/questions/updating-ubuntu-14-04-security-updates)
 
 ### Give grader access. ###
 
 1. Create user account `grader`:
-* While SSH as ubuntu, run `sudo adduser grader`
-* Enter pass twice and complete creation.
+* While still as ubuntu user, run `sudo adduser grader`
+* Enter password twice and complete creation.
 * Give grader sudo access via: `sudo nano /etc/sudoers.d/grader` and add the line, `grader ALL=(ALL:ALL) ALL`
-* Save and close the Nano editor.
+* Save and exit the nano editor.
 * Configure time zone to UTC via `sudo dpkg-reconfigure tzdata`
 
 2. Grant a SSH key pair for grader:
 * Open a new Git Bash terminal but do not SSH (local machine).
-* `ssh-keygen -f ~/.ssh/grader_key`
-* `cat ~/.ssh/grader_key.pub` and copy the key contents.
+* `ssh-keygen -f ~/.ssh/grader_key` where `grader_key` is your chosen key name.
+* `cat ~/.ssh/grader_key.pub` and copy the key contents. Warning: Copy the contents as is, one giant line with no breaks.
 * Return to the grader's ssh terminal.
 * Create a new dir via `mkdir .ssh`
 * `sudo chown -R grader:grader /home/grader/.ssh` to grant grader permission to that dir.
@@ -132,7 +133,7 @@ APT::Periodic::Unattended-Upgrade "1";
 * Enable Apache to serve Flask apps via `sudo apt-get install libapache2-mod-wsgi python-dev`
 * Enable the Apache HTTP server module WSGI via `sudo a2enmod wsgi`
 * Start it via `sudo service apache2 start`
-* If you load up your public IP in yhour browser, you should see a "It works`" page.
+* If you load up your public IP in your browser, you should see a "It works`" page.
 
 2. Install Git:
 
@@ -177,7 +178,7 @@ application.secret_key = "super_secret_key"
 * `pip install Flask`
 * Install the remaining dependencies for the web app:
 `pip install bleach httplib2 request oauth2client sqlalchemy python-psycopg2`
-* Source: [Flask](http://flask.pocoo.org/docs/0.12/installation/), [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps_)
+* Sources: [Flask](http://flask.pocoo.org/docs/0.12/installation/), [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps_)
 
 6. Configure the Virtual Host
 
