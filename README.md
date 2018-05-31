@@ -12,13 +12,18 @@ From Udacity's course description: "You will take a baseline installation of a L
 
 ## Software Used For This Project ##
 
-* For code editing, I used Microsoft Visual Studio Code.
-* During testing phase of the Item Catalog project, I used Oracle Virtual Machine VirtualBox Version 5.2.12
-* For simplified SSH access during testing phase, I used Vagrant Version 2.1.1
-* For terminal Bash access and version control, I used Git Version 2.17.1
-* Internet browser used was Google Chrome Version 66.0.3359.181
-* My local machine is an Alienware 17 R4 laptop running Microsoft Windows 10 Home.
-* Responsive design was tested via an iPhone 7 Plus.
+* `fail2ban` - to help prevent brute-force server attacks.
+* `sendmail` - to send the admin mail anytime suspicious activity is detected via fail2ban.
+* `unattended-upgrades` - to allow automatic system updates.
+* `apache2` - installs Apache Web Server package.
+* `libapache2-mod-wsgi python-dev` - enables Apache to serve Flask apps
+* `git` - for version control and cloning the remote repository.
+* `pip` - allows for Python package installs.
+* `virtualvenv` - installs the virtual environment.
+* `Flask` - to install the Flask module.
+* Project dependencies software to allow Python to interact with Flask, the webserver and database:
+`bleach`, `httplib2`, `request`, `oauth2client`, `sqlalchemy`, `python-psycopg2`
+* `libpq-dev python-dev` and `postgresql postgresql-contrib` - installs Python packages for PostgreSQL.
 
 ## Linux Server Configuration and App Deployment Steps ##
 
