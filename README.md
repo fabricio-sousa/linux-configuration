@@ -1,6 +1,6 @@
 # Udacity Full Stack Web Developer Nanodegree Linux Server Configuration Project
 
-## Introduction
+## Description
 
 From Udacity's course description: "You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers."
 
@@ -9,6 +9,10 @@ From Udacity's course description: "You will take a baseline installation of a L
 * IP address: 18.221.122.149
 * SSH Port: 2200
 * App URL: http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/
+
+## Frameworks, Libraries, and APIs
+
+HTML5 and CSS, Python 2.7, Javascript, PostgreSQL, Flask.
 
 ## Software Used For This Project
 
@@ -25,7 +29,8 @@ From Udacity's course description: "You will take a baseline installation of a L
 `bleach`, `httplib2`, `request`, `oauth2client`, `sqlalchemy`, `python-psycopg2`
 * `libpq-dev python-dev` and `postgresql postgresql-contrib` - installs Python packages for PostgreSQL.
 
-## Linux Server Configuration and App Deployment Steps
+
+## Installation and How To Run (Linux Server Configuration and app deployment)
 
 ### Get your server.
 
