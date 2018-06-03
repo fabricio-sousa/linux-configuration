@@ -1,4 +1,4 @@
-# Udacity Full Stack Web Developer Nanodegree Linux Server Configuration Project
+# Udacity Full Stack Web Developer Nanodegree | Linux Server Configuration Project
 
 ## Description
 
