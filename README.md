@@ -1,16 +1,16 @@
-# Linux Server Configuration Project #
+# Udacity Full Stack Web Developer Nanodegree Linux Server Configuration Project
 
-## Introduction ##
+## Introduction
 
 From Udacity's course description: "You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers."
 
-## Server Info ##
+## Server Info
 
 * IP address: 18.221.122.149
 * SSH Port: 2200
 * App URL: http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/
 
-## Software Used For This Project ##
+## Software Used For This Project
 
 * `fail2ban` - to help prevent brute-force server attacks.
 * `sendmail` - to send the admin mail anytime suspicious activity is detected via fail2ban.
@@ -25,9 +25,9 @@ From Udacity's course description: "You will take a baseline installation of a L
 `bleach`, `httplib2`, `request`, `oauth2client`, `sqlalchemy`, `python-psycopg2`
 * `libpq-dev python-dev` and `postgresql postgresql-contrib` - installs Python packages for PostgreSQL.
 
-## Linux Server Configuration and App Deployment Steps ##
+## Linux Server Configuration and App Deployment Steps
 
-### Get your server. ####
+### Get your server.
 
 1. Start a new Ubuntu Linux server instance on Amazon Lightsail
 * Access [Amazon Lightsail](https://lightsail.aws.amazon.com/ls/webapp/home/resources) and follow instructions to create an account. 
@@ -42,7 +42,7 @@ From Udacity's course description: "You will take a baseline installation of a L
 * Use the following command to connect to the instance via Git Bash:
 `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149`
 
-### Secure your server. ###
+### Secure your server.
 
 1. Update and upgrade installed packages: 
 * `sudo apt-get update`
@@ -116,7 +116,7 @@ APT::Periodic::Unattended-Upgrade "1";
 * `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149` Back in.
 * Source: [Digital Ocean](https://www.digitalocean.com/community/questions/updating-ubuntu-14-04-security-updates)
 
-### Give grader access. ###
+### Give grader access.
 
 1. Create user account `grader`:
 * While still as ubuntu user, run `sudo adduser grader`
@@ -140,7 +140,7 @@ APT::Periodic::Unattended-Upgrade "1";
 * `exit` and then `ssh -i ~/.ssh/grader_key -p 2200 grader@18.221.122.149`
 * Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2)
 
-### Prepare the Server and Deploy your App! ###
+### Prepare the Server and Deploy your App!
 
 1. Install Apache:
 
@@ -260,4 +260,3 @@ The following links provided me with great ideas and solutions to solve the coun
 * [`OperationalError: (sqlite3.OperationalError) unable to open database file (Background on this error at: http://sqlalche.me/e/e3q8`: Udacity Forums!](https://discussions.udacity.com/t/operationalerror-sqlite3-operationalerror-unable-to-open-database-file-background-on-this-error-at-http-sqlalche-me-e-e3q8/605647)
 
 * [SQLAlchemy Error Messages](http://docs.sqlalchemy.org/en/latest/errors.html#error-e3q8)
-
