@@ -1,5 +1,7 @@
 # Udacity Full Stack Web Developer Nanodegree | Linux Server Configuration Project
 
+### Developer: Fabricio Sousa
+
 ## Description
 
 From Udacity's course description: "You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers."
