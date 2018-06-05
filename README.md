@@ -1,6 +1,6 @@
 # Udacity Full Stack Web Developer Nanodegree | Linux Server Configuration Project
 
-### Developer: Fabricio Sousa
+#### Developer: Fabricio Sousa
 
 ## Description
 
