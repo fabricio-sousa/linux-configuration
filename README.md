@@ -6,11 +6,11 @@
 
 From Udacity's course description: "You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers."
 
-## Server Info
+## Server Info (will remain live only during Udacity review)
 
-* IP address: 18.221.122.149
+* IP address: <del>18.221.122.149<del>
 * SSH Port: 2200
-* App URL: http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/
+* App URL: <del>http://ec2-18-221-122-149.us-east-2.compute.amazonaws.com/<del>
 
 ## Frameworks, Libraries, and APIs
 
