@@ -78,7 +78,7 @@ sudo ufw enable
 ```
 * Exit the connection by typing `exit` then `enter`.
 * Return to the instance firewall management page in Amazon Lightsail and delete port 22.
-* `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149`
+* `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149 -p 2200`
 
 4. Install fail2ban to help prevent brute-force server attacks:
 * Install the package via `sudo apt-get install fail2ban`
@@ -120,7 +120,7 @@ APT::Periodic::Unattended-Upgrade "1";
 `sudo apt-get update`
 `sudo apt-get dist-upgrade`
 `sudo shutdown -r now`
-* `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149` Back in.
+* `ssh -i ~/.ssh/ls_key.rsa ubuntu@18.221.122.149 -p 2200` Back in.
 * Source: [Digital Ocean](https://www.digitalocean.com/community/questions/updating-ubuntu-14-04-security-updates)
 
 ### Give grader access.
@@ -165,6 +165,7 @@ APT::Periodic::Unattended-Upgrade "1";
 
 * `cd /var/www`
 * `sudo mkdir catalog` to create the catalog dir.
+* `sudo chown -R ubuntu:ubuntu catalog`
 * `cd /catalog` then `git clone https://github.com/fabricio-sousa/items-catalog.git catalog`
 * Create a catalog.wsgi file so that it can run the web app over the apache mod_wsgi, as follows:
 `sudo nano var/www/catalog/catalog.wsgi` and add:
@@ -179,7 +180,7 @@ sys.path.insert(0, "/var/www/catalog/")
 from catalog import app as application
 application.secret_key = "super_secret_key"
 ```
-
+* `sudo chown -R ubuntu:ubuntu catalog.wsgi`
 * `sudo service apache2 restart`
 * Source: [mod_wsgi](http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIScriptAlias.html)
 
@@ -230,6 +231,11 @@ application.secret_key = "super_secret_key"
 ```
 * Enable the host via `sudo a2ensite catalog`
 * Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts)
+* Install system monitor tools:
+* `sudo apt-get update`
+* `sudo apt-get install glances`
+* To start this system monitor program just type this from the command line: `glances`
+* Type `glances -h` to know more about this program's options.
 
 7. Configure PostgreSQL and modify the app to use it
 
@@ -237,7 +243,7 @@ application.secret_key = "super_secret_key"
 * `sudo apt-get install postgresql postgresql-contrib`
 * Change to the new automatically created postgres user `sudo su - postgres`
 * Connect to the database environment via `psql`
-* Create a new `catalog` user via: `# CREATE USER catalog WITH PASSWORD 'catalog';
+* Create a new `catalog` user via: `CREATE USER catalog WITH PASSWORD 'catalog';`
 * `ALTER USER catalog CREATEDB;` Gives catalog user the capability to create a database.
 * `CREATE DATABASE catalog WITH OWNER catalog;`
 * `\c catalog` to connect to the newly created database
